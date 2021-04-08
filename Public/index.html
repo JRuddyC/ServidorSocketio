@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+    <title>Socket.IO</title>
+</head>
+<body>
+    <h1>Socket IO</h1>
+    <div id="chat-container">
+         <div id="chat-window">
+            <div id="output"></div>
+            <div id="action"></div>
+         </div>
+         <input type="text" name="username" id="username" placeholder="username">
+         <input type="text" name="message" id="message" placeholder="message">
+         <button id="send">Send</button>
+    </div>
+    <script src="/socket.io/socket.io.js" charset="utf-8"></script>
+    <script src="chat.js" charset="utf-8"></script>
+</body>
+</html>
