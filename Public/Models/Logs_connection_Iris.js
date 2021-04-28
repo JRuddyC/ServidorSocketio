@@ -11,4 +11,4 @@ const DeviceSchema = new Schema({
     date_time: String
 }); 
 
-module.exports = mongoose.model('Logs_connection_Iris', DeviceSchema);
+module.exports = mongoose.model('logs_connection_iris', DeviceSchema);

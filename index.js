@@ -4,7 +4,6 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var mongoose = require('mongoose');
-
 var Device = require('./Public/Models/Logs_connection_Iris');
 //variables a enviar 
 var ip_address;
@@ -21,18 +20,20 @@ var messages = [{
   author: "Servidor"
 }];
 
-mongoose.connect('mongodb://root:MongolitoDes2021SVR@10.10.166.89:27017/UATF_RSweb')
-  .then(db => console.log('Db connected'))
-  .catch(err => console.log(err)); 
 
+const ver = mongoose.connect('mongodb://root:MongolitoDes2021SVR@10.10.166.89:27017/UATF_RSweb')
+  .then(db => console.log('db connected'))
+  .catch(err => console.log(err));
 app.use(express.static('public'));
 
-app.get('/hello', function(req, res) {
-  res.status(200).send("Hello World!");
-});
+//Obtener lista de dispositivos
+function getItems(){
+  Device.find({}, function(err,res){
+    console.log(res);
+  });
+}
+
 //connecting to mongodb
-
-
 io.on('connection', function(socket) {
   console.log('Alguien se ha conectado con Sockets');
   console.log('ID : '+socket.id);
@@ -69,6 +70,7 @@ io.on('connection', function(socket) {
     dateNow =  new Date(dateNow);
     horaActual = dateNow.getHours()+':'+dateNow.getMinutes();
     add();
+    getItems();
   })
 });
 
@@ -81,18 +83,19 @@ function add(){
     mac: mac_address,
     device_type: type,
     date_time: dateNow.toLocaleDateString()+' '+horaActual
+  }
+
+
+  var device = new Device(newDevice);
+  device.save(function (err){
+    if(err){
+      console.log(err)
+    }else{
+      console.log('usuario añadido')
+    }
+  })
 }
 
-var device = new Device(newDevice);
-device.save(function (err){
-if(err){
-  console.log(err)
-}else{
-  console.log('usuario añadido')
-}
-})
-}
-
-server.listen(9001, '0.0.0.0', () => {
+server.listen(9001,'0.0.0.0', () => {
   console.log("Servidor corriendo en http://localhost:9001");
 });
