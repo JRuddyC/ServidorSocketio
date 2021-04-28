@@ -27,12 +27,23 @@ const ver = mongoose.connect('mongodb://root:MongolitoDes2021SVR@10.10.166.89:27
 app.use(express.static('public'));
 
 //Obtener lista de dispositivos
-function getItems(){
-  Device.find({}, function(err,res){
-    console.log(res);
-  });
+
+findAllLogs = function(req, res){
+  Device.find({}, function(err,logs){
+    if(err){
+      res.send(500,err.message)
+      console.log(err.message)
+    }
+    res.status(200).json(logs)
+  })
 }
 
+var logsItems = express.Router();
+
+  logsItems.route('/logs')
+    .get(findAllLogs);
+
+app.use('/api', logsItems)
 //connecting to mongodb
 io.on('connection', function(socket) {
   console.log('Alguien se ha conectado con Sockets');
@@ -96,6 +107,7 @@ function add(){
   })
 }
 
-server.listen(9001,'0.0.0.0', () => {
+server.listen(9001, '0.0.0.0', () => {
   console.log("Servidor corriendo en http://localhost:9001");
 });
+
