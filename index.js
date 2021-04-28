@@ -93,6 +93,6 @@ if(err){
 })
 }
 
-server.listen(9001, function() {
+server.listen(9001, '0.0.0.0', () => {
   console.log("Servidor corriendo en http://localhost:9001");
 });
