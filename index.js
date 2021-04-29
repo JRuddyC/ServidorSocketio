@@ -81,7 +81,6 @@ io.on('connection', function(socket) {
     dateNow =  new Date(dateNow);
     horaActual = dateNow.getHours()+':'+dateNow.getMinutes();
     add();
-    getItems();
   })
 });
 
